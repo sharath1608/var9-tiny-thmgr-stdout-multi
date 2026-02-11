@@ -551,7 +551,7 @@ done
 # Generate CSV files for fit.py
 # time-serial.csv
 #echo "$iva_name,size,time" > time-serial.csv
-echo "$num_samples,$mandel_size,$max_iter,$num_intervals,$rt_size,$pw_len,time" > time-serial.csv
+echo "num_samples,mandel_size,max_iter,num_intervals,rt_size,pw_len,time" > time-serial.csv
 for i in "${!iva_arr[@]}"; do
   # Extract all columns from the row for multivariate fitting
   echo "${iva_arr[$i]},${time_serial[$i]}" >> time-serial.csv
@@ -574,7 +574,7 @@ for i in "${!core[@]}"; do
 done
 
 # space-serial.csv
-echo "$num_samples,$mandel_size,$max_iter,$num_intervals,$rt_size,$pw_len,memory" > space-serial.csv
+echo "num_samples,mandel_size,max_iter,num_intervals,rt_size,pw_len,memory" > space-serial.csv
 for i in "${!iva_arr[@]}"; do
   # Extract all columns from the row for multivariate fitting
   echo "${iva_arr[$i]},${space_serial[$i]}" >> space-serial.csv
@@ -591,7 +591,7 @@ for i in "${!core[@]}"; do
 done
 
 # power-serial.csv
-echo "$num_samples,$mandel_size,$max_iter,$num_intervals,$rt_size,$pw_len,power" > power-serial.csv
+echo "num_samples,mandel_size,max_iter,num_intervals,rt_size,pw_len,power" > power-serial.csv
 for i in "${!iva_arr[@]}"; do
   # Extract all columns from the row for multivariate fitting
   echo "${iva_arr[$i]},${power_serial[$i]}" >> power-serial.csv
@@ -608,7 +608,7 @@ for i in "${!core[@]}"; do
 done
 
 # energy-serial.csv
-echo "$num_samples,$mandel_size,$max_iter,$num_intervals,$rt_size,$pw_len,energy" > energy-serial.csv
+echo "num_samples,mmandel_size,max_iter,num_intervals,rt_size,pw_len,energy" > energy-serial.csv
 for i in "${!iva_arr[@]}"; do
   # Extract all columns from the row for multivariate fitting
   echo "${iva_arr[$i]},${energy_serial[$i]}" >> energy-serial.csv
