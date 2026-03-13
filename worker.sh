@@ -146,11 +146,18 @@ run_thmgr() {
 
   local payload response job_id attempt retries interval http_status body status duration
 
+  IFS=',' read -ra iva_args <<< "$iva_data"
+  local argv_json='"main"'
+  for arg in "${iva_args[@]}"; do
+    argv_json+=", \"$arg\""
+  done
+  argv_json+=", \"$core_value\""
+
   payload=$(cat <<EOF
 {
   "repo": "$repo_name",
   "core": $core_value,
-  "argv": ["main", "$iva_data", "$iva_data", "$core_value"]
+  "argv": [$argv_json]
 }
 EOF
 )
@@ -245,8 +252,9 @@ run_parallel_time() {
   pushd "$job_dir" >/dev/null
 
   local start end exec_time
+  IFS=',' read -ra iva_args <<< "$iva_data"
   start=$(date +%s.%N)
-  "./$algo" "$iva_data" "$iva_data" "$core_value" >/dev/null
+  "./$algo" "${iva_args[@]}" "$core_value" >/dev/null
   end=$(date +%s.%N)
   exec_time=$(printf '%.8f' "$(echo "$end - $start" | bc -l)")
 
@@ -273,7 +281,8 @@ run_parallel_memory() {
   pushd "$job_dir" >/dev/null
 
   local heap_prefix="$temp_dir/parallel_heap_$idx"
-  heaptrack -o "$heap_prefix" "./$algo" "$iva_data" "$iva_data" "$core_value" >/dev/null
+  IFS=',' read -ra iva_args <<< "$iva_data"
+  heaptrack -o "$heap_prefix" "./$algo" "${iva_args[@]}" "$core_value" >/dev/null
   local peak
   peak=$(heaptrack --analyze "${heap_prefix}.zst" | grep "peak heap memory consumption" | awk '{print $5}')
   rm -f "${heap_prefix}.zst"
