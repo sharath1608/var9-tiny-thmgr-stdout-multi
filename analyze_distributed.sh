@@ -226,11 +226,11 @@ cov-callgraph-generator --cov-file "$klee_dir/test000001-replay/test000001.cov" 
 # TALP coverage generation - end
 
 # Generate parallel analysis
-/usr/bin/clang-18 -g -emit-llvm -S -o main_original.ll main_original.c
-/usr/bin/opt-18 -load-pass-plugin=GanymedeAnalysisPlugin.so -passes="ganymede-analysis" main_original.ll
+#/usr/bin/clang-18 -g -emit-llvm -S -o main_original.ll main_original.c
+#/usr/bin/opt-18 -load-pass-plugin=GanymedeAnalysisPlugin.so -passes="ganymede-analysis" main_original.ll
 
 # Generate standalone parallel code
-/usr/bin/ganymede-codegen --analysis-file=parallelization_analysis.json --codegen-type=standalone main_original.c > main.c
+#/usr/bin/ganymede-codegen --analysis-file=parallelization_analysis.json --codegen-type=standalone main_original.c > main.c
 
 # HACK - START
 # HACK - fusion currently supports a standalone threadpool
@@ -238,9 +238,9 @@ cov-callgraph-generator --cov-file "$klee_dir/test000001-replay/test000001.cov" 
 
 # Generate thread manager parallel code
 #/usr/bin/ganymede-codegen --analysis-file=parallelization_analysis.json --codegen-type=thmgr main_original.c > main_service.c
-cp main.c main_service.c
-sed -i 's/main(int/main_worker(int/' main_service.c
-sed -i 's/atoi(argv\[argc-1\])/atoi(argv[argc-2])/' main_service.c
+#cp main.c main_service.c
+#sed -i 's/main(int/main_worker(int/' main_service.c
+#sed -i 's/atoi(argv\[argc-1\])/atoi(argv[argc-2])/' main_service.c
 
 # HACK -END
 
