@@ -670,6 +670,7 @@ class DistributedProfiler:
                     )
                 )
         elif group_name == "parallel_thmgr_measurements":
+            parallel_iva = self.iva_values[-1] if self.iva_values else str(self.iva_data)
             for idx, core in enumerate(self.core_values):
                 remote_args = [
                     "bash",
@@ -679,7 +680,7 @@ class DistributedProfiler:
                     str(self.temp_dir),
                     self.repo_name,
                     str(core),
-                    str(self.iva_data),
+                    str(parallel_iva),
                     self.thmgr_api,
                     str(idx),
                 ]
@@ -693,6 +694,7 @@ class DistributedProfiler:
                     )
                 )
         elif group_name == "parallel_direct_measurements":
+            parallel_iva = self.iva_values[-1] if self.iva_values else str(self.iva_data)
             for idx, core in enumerate(self.core_values):
                 parallel_time_args = [
                     "bash",
@@ -702,7 +704,7 @@ class DistributedProfiler:
                     str(self.temp_dir),
                     self.algo,
                     str(core),
-                    str(self.iva_data),
+                    str(parallel_iva),
                     str(idx),
                 ]
                 tasks.append(
@@ -723,7 +725,7 @@ class DistributedProfiler:
                     str(self.temp_dir),
                     self.algo,
                     str(core),
-                    str(self.iva_data),
+                    str(parallel_iva),
                     str(idx),
                 ]
                 tasks.append(
